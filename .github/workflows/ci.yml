@@ -1,29 +1,29 @@
-name: Regression Model CI
+name: ML Ops Workflow CI # Changed name to be more general
 
 on:
   push:
     branches:
-      - reg_branch 
+      - reg_branch   # Keep this to ensure previous CI still works if needed
+      - hyper_branch # This workflow now also runs when there's a push to hyper_branch
 
 jobs:
   build:
-    runs-on: ubuntu-latest 
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4 
+      uses: actions/checkout@v4
 
     - name: Set up Python
-      uses: actions/setup-python@v5 
+      uses: actions/setup-python@v5
       with:
-        python-version: '3.9' 
+        python-version: '3.9'
 
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt # Install packages from requirements.txt
+        pip install -r requirements.txt
 
-    - name: Run Regression Models
+    - name: Run Regression Models with/without Tuning
       run: |
-        python regression.py # Execute your regression script
-        
+        python regression.py # This script now runs both initial and tuned evaluations
